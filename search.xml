@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>first article</title>
+      <link href="/086whl/2023/10/23/first-article/"/>
+      <url>/086whl/2023/10/23/first-article/</url>
+      
+        <content type="html"><![CDATA[<p>Hello!</p><p>This is my first article!</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Article </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> General </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/086whl/2023/10/23/hello-world/"/>
       <url>/086whl/2023/10/23/hello-world/</url>
