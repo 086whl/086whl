@@ -6,21 +6,21 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
   
-  <title>Hexo</title>
+  <title>Jesse-W</title>
   <meta name="author" content="John Doe">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Hexo"/>
+  <meta property="og:site_name" content="Jesse-W"/>
 
   
     <meta property="og:image" content=""/>
   
 
   
-    <link rel="alternative" href="/086whl//atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/086whl//atom.xml" title="Jesse-W" type="application/atom+xml">
   
   
     <link href="/086whl/favicon.png" rel="icon">
@@ -60,7 +60,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-	  <a class="navbar-brand" href="/086whl/">Hexo</a>
+	  <a class="navbar-brand" href="/086whl/">Jesse-W</a>
       <div class="collapse navbar-collapse nav-menu">
 		<ul class="nav navbar-nav">
 		  
@@ -103,7 +103,7 @@
   <div class="container">
   	<div class="content">
     	 <div class="page-header logo">
-  <h1>Hexo<span class="blink-fast">∎</span></h1>
+  <h1>Jesse-W<span class="blink-fast">∎</span></h1>
 </div>
 
 <div class="row page">
@@ -125,6 +125,46 @@
 		<div class="mypage">
 		
 		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/086whl/2023/12/08/saveBatch优化/" >saveBatch优化</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2023-12-08  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>数据量过大，使用saveBatch保存数据太慢如何解决：<br>在使用mybatis-plus的saveBatch方法时发现保存太慢，会生成一大堆的insert，而不是一批一批的，影响因素可能有两个，如下：</p>
+<ol>
+<li>mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可能为null的话，在可以在注解上增加忽略</li>
+</ol>
+<p>@TableField(value &#x3D; “manager_name”,insertStrategy &#x3D; FieldStrategy.IGNORED)<br>    private String	managerName;<br>这样能保证saveBatch的时候只会有一个insert（当然这也取决于你用的批次大小，默认为1000一次insert）</p>
+<p>如果没有特别要求，可以设置全局配置来保障，实际中使用批量保存的其实就特定表，也不是特别建议使用全局的配置，把可能的字段添加忽略就行了。</p>
+<p>mybatis-plus:<br>  global-config:<br>    db-config:<br>      insert-strategy: ignored<br>修改完毕后，insert应该是一批一个insert，而不是一堆</p>
+<p>Mybatis-Plus saveBatch() 批量保存失效</p>
+<ol start="2">
+<li>如果已经是一批一个insert以后，还是慢，则需要修改数据库链接，需要在数据库链接后面增加</li>
+</ol>
+<p>rewriteBatchedStatements&#x3D;true<br>这样在调用saveBatch的时候时间能得到有效提升</p>
+<p>解释：rewriteBatchedStatements&#x3D;true<br>MySQL的JDBC连接的url中要加rewriteBatchedStatements参数，并保证5.1.13以上版本的驱动，才能实现高性能的批量插入。<br>MySQL JDBC驱动在默认情况下会无视executeBatch()语句，把我们期望批量执行的一组sql语句拆散，一条一条地发给MySQL数据库，批量插入实际上是单条插入，直接造成较低的性能。<br>只有把rewriteBatchedStatements参数置为true, 驱动才会帮你批量执行SQL<br>另外这个选项对INSERT&#x2F;UPDATE&#x2F;DELETE都有效</p>
+
+	
+	</div>
+  <a type="button" href="/086whl/2023/12/08/saveBatch优化/#more" class="btn btn-default more">Read More</a>
+</div>
+
 		
 			
 	
@@ -234,6 +274,8 @@
 		
 			<li><a href="/086whl/categories/Article/">Article<span>1</span></a></li>
 		
+			<li><a href="/086whl/categories/Development/">Development<span>1</span></a></li>
+		
 		</ul>
 	</div>
 
@@ -242,6 +284,8 @@
 	<div class="widget">
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
+		
+			<li><a href="/086whl/tags/MybatisPlus/">MybatisPlus<span>1</span></a></li>
 		
 			<li><a href="/086whl/tags/General/">General<span>1</span></a></li>
 		
@@ -255,6 +299,10 @@
 <div class="widget">
   <h4>Recent Posts</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/086whl/2023/12/08/saveBatch优化/" ><i class="fa fa-file-o"></i>saveBatch优化</a>
+      </li>
     
       <li>
         <a href="/086whl/2023/10/23/first-article/" ><i class="fa fa-file-o"></i>first article</a>
