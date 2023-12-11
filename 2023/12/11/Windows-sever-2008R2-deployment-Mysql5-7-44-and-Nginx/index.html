@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Windows sever 2008R2 deployment Mysql5.7.44 and Nginx | Jesse-W</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="1.Deployment Mysql5.7.44
+1.1.Install .netFreamWork4.5.2（The specified version cannot installed in other versions）
+https://dotnet.microsoft.com/zh-cn/d">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Windows sever 2008R2 deployment Mysql5.7.44 and Nginx"/>
+  <meta property="og:site_name" content="Jesse-W"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/086whl//atom.xml" title="Jesse-W" type="application/atom+xml">
+  
+  
+    <link href="/086whl/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/086whl/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/086whl/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/086whl/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/086whl/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/086whl/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/086whl/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/086whl/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-70812759-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/086whl/">Jesse-W</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/086whl/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/086whl/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/086whl/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/086whl/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/086whl/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> Windows sever 2008R2 deployment Mysql5.7.44 and Nginx</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>1.Deployment Mysql5.7.44</p>
+<p>1.1.Install .netFreamWork4.5.2（The specified version cannot installed in other versions）</p>
+<p><a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net452">https://dotnet.microsoft.com/zh-cn/download/dotnet-framework/net452</a></p>
+<p>1.2.Install Windows 2008 R2 Service Pack 1</p>
+<p><a target="_blank" rel="noopener" href="https://www.catalog.update.microsoft.com/Search.aspx?q=KB976932">https://www.catalog.update.microsoft.com/Search.aspx?q=KB976932</a></p>
+<p>1.3.Manually installing VC2019C++, it’s recommended to install the 2015-2019 collection, as direct installation is will to fail.</p>
+<p>1.4.Normal installation of mysql5.7.44</p>
+<p>2.Deployment Nginx</p>
+<p>2.1.Download Nginx<br><a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">http://nginx.org/en/download.html</a></p>
+<p><img src="/086whl/%5C086whl%5Cimages%5Cpasted-1.png" alt="upload successful"></p>
+<p>2.2.Unzip of download files</p>
+<p>2.3.Run nginx.exe</p>
+<p>2.4.configure nginx.conf</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">worker_processes  <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  <span class="number">1024</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.<span class="property">types</span>;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line"></span><br><span class="line">    sendfile        on;</span><br><span class="line">    </span><br><span class="line">    keepalive_timeout  <span class="number">65</span>;</span><br><span class="line">    </span><br><span class="line">    # my application cms</span><br><span class="line">    upstream cms &#123;</span><br><span class="line">        server <span class="attr">localhost</span>:<span class="number">8080</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    # file preview server</span><br><span class="line">    upstream filePreview&#123;</span><br><span class="line">        server <span class="attr">localhost</span>:<span class="number">8012</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    server &#123;</span><br><span class="line">        listen       <span class="number">80</span>;</span><br><span class="line">        server_name  localhost;</span><br><span class="line">    </span><br><span class="line">        location / &#123;</span><br><span class="line">     proxy_pass <span class="attr">http</span>:<span class="comment">//cms/;</span></span><br><span class="line">            root   ../cms/html/web;</span><br><span class="line">            index  index.<span class="property">html</span> index.<span class="property">htm</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	location /mg/ &#123;</span><br><span class="line">		proxy_set_header <span class="title class_">Host</span> $http_host;</span><br><span class="line">		proxy_set_header X-<span class="title class_">Real</span>-<span class="variable constant_">IP</span> $remote_addr;</span><br><span class="line">		proxy_set_header <span class="variable constant_">REMOTE</span>-<span class="variable constant_">HOST</span> $remote_addr;</span><br><span class="line">		proxy_set_header X-<span class="title class_">Forwarded</span>-<span class="title class_">For</span> $proxy_add_x_forwarded_for;</span><br><span class="line">		proxy_pass <span class="attr">http</span>:<span class="comment">//cms/mg/;</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	location /filePreview/ &#123;</span><br><span class="line">		proxy_set_header <span class="title class_">Host</span> $http_host;</span><br><span class="line">		proxy_set_header X-<span class="title class_">Real</span>-<span class="variable constant_">IP</span> $remote_addr;</span><br><span class="line">		proxy_set_header <span class="variable constant_">REMOTE</span>-<span class="variable constant_">HOST</span> $remote_addr;</span><br><span class="line">		proxy_set_header X-<span class="title class_">Forwarded</span>-<span class="title class_">For</span> $proxy_add_x_forwarded_for;</span><br><span class="line">		proxy_pass <span class="attr">http</span>:<span class="comment">//filePreview/filePreview/;</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	    error_page   <span class="number">500</span> <span class="number">502</span> <span class="number">503</span> <span class="number">504</span>  /50x.<span class="property">html</span>;</span><br><span class="line">	    location = /50x.<span class="property">html</span> &#123;</span><br><span class="line">	        root   html;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+
+    
+    
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
+    
+
+    <a href="/086whl/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/086whl/2023/12/08/saveBatch优化/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2023-12-11 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/086whl/categories/Development/">Development<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2023 John Doe
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
+     <br> Theme by <a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/086whl/js/jquery.imagesloaded.min.js"></script>
+<script src="/086whl/js/gallery.js"></script>
+<script src="/086whl/js/bootstrap.min.js"></script>
+<script src="/086whl/js/main.js"></script>
+<script src="/086whl/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/086whl/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/086whl/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/086whl/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
