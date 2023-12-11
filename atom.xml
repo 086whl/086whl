@@ -6,7 +6,7 @@
   <link href="https://086whl.github.io/086whl/atom.xml" rel="self"/>
   
   <link href="https://086whl.github.io/086whl/"/>
-  <updated>2023-12-08T09:19:01.017Z</updated>
+  <updated>2023-12-11T02:06:46.263Z</updated>
   <id>https://086whl.github.io/086whl/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>saveBatch优化</title>
     <link href="https://086whl.github.io/086whl/2023/12/08/saveBatch%E4%BC%98%E5%8C%96/"/>
     <id>https://086whl.github.io/086whl/2023/12/08/saveBatch%E4%BC%98%E5%8C%96/</id>
-    <published>2023-12-08T09:16:33.000Z</published>
-    <updated>2023-12-08T09:19:01.017Z</updated>
+    <published>2023-12-08T09:16:00.000Z</published>
+    <updated>2023-12-11T02:06:46.263Z</updated>
     
     <content type="html"><![CDATA[<p>数据量过大，使用saveBatch保存数据太慢如何解决：<br>在使用mybatis-plus的saveBatch方法时发现保存太慢，会生成一大堆的insert，而不是一批一批的，影响因素可能有两个，如下：</p><ol><li>mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可能为null的话，在可以在注解上增加忽略</li></ol><p>@TableField(value &#x3D; “manager_name”,insertStrategy &#x3D; FieldStrategy.IGNORED)<br>    private StringmanagerName;<br>这样能保证saveBatch的时候只会有一个insert（当然这也取决于你用的批次大小，默认为1000一次insert）</p><p>如果没有特别要求，可以设置全局配置来保障，实际中使用批量保存的其实就特定表，也不是特别建议使用全局的配置，把可能的字段添加忽略就行了。</p><p>mybatis-plus:<br>  global-config:<br>    db-config:<br>      insert-strategy: ignored<br>修改完毕后，insert应该是一批一个insert，而不是一堆</p><p>Mybatis-Plus saveBatch() 批量保存失效</p><ol start="2"><li>如果已经是一批一个insert以后，还是慢，则需要修改数据库链接，需要在数据库链接后面增加</li></ol><p>rewriteBatchedStatements&#x3D;true<br>这样在调用saveBatch的时候时间能得到有效提升</p><p>解释：rewriteBatchedStatements&#x3D;true<br>MySQL的JDBC连接的url中要加rewriteBatchedStatements参数，并保证5.1.13以上版本的驱动，才能实现高性能的批量插入。<br>MySQL JDBC驱动在默认情况下会无视executeBatch()语句，把我们期望批量执行的一组sql语句拆散，一条一条地发给MySQL数据库，批量插入实际上是单条插入，直接造成较低的性能。<br>只有把rewriteBatchedStatements参数置为true, 驱动才会帮你批量执行SQL<br>另外这个选项对INSERT&#x2F;UPDATE&#x2F;DELETE都有效</p>]]></content>
     
