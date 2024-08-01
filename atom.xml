@@ -6,7 +6,7 @@
   <link href="https://086whl.github.io/086whl/atom.xml" rel="self"/>
   
   <link href="https://086whl.github.io/086whl/"/>
-  <updated>2023-12-11T10:20:44.770Z</updated>
+  <updated>2024-08-01T08:54:56.990Z</updated>
   <id>https://086whl.github.io/086whl/</id>
   
   <author>
@@ -15,6 +15,78 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Centos7 install ffmpeg</title>
+    <link href="https://086whl.github.io/086whl/2024/08/01/Centos7-install-ffmpeg/"/>
+    <id>https://086whl.github.io/086whl/2024/08/01/Centos7-install-ffmpeg/</id>
+    <published>2024-08-01T08:08:03.000Z</published>
+    <updated>2024-08-01T08:54:56.990Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-preparation-install-dependencies"><a href="#1-preparation-install-dependencies" class="headerlink" title="1.preparation install dependencies"></a>1.preparation install dependencies</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y gcc g++ cmake gcc-c++ </span><br></pre></td></tr></table></figure><h2 id="2-install-and-compile-x264"><a href="#2-install-and-compile-x264" class="headerlink" title="2.install and compile x264"></a>2.install and compile x264</h2><p><em>if you haven’t installed the bzip2, you can run the code “<u>sudo yum install bzip2</u>“ to install it before decompression.</em></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">wget https://code.videolan.org/videolan/x264/-/archive/master/x264-master.tar.bz2</span><br><span class="line"></span><br><span class="line">tar -jxvf x264-master.tar.bz2</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ./x264-master</span><br><span class="line"></span><br><span class="line">make clean &amp;&amp; make uninstall</span><br><span class="line"></span><br><span class="line">PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ ./configure  --enable-shared</span><br><span class="line"></span><br><span class="line">make -j4 &amp;&amp; make install　　</span><br></pre></td></tr></table></figure><h2 id="3-install-and-compile-x265"><a href="#3-install-and-compile-x265" class="headerlink" title="3.install and compile x265"></a>3.install and compile x265</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https://anduin.linuxfromscratch.org/BLFS/x265/x265_3.4.tar.gz</span><br><span class="line"></span><br><span class="line">tar -zxvf x265_3.4.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> x265_3.4/source</span><br><span class="line"></span><br><span class="line">cmake -DCMAKE_INSTALL_PREFIX=/usr/local/x265</span><br><span class="line"></span><br><span class="line">make install </span><br></pre></td></tr></table></figure><h2 id="4-download-source-code-of-ffmpeg-and-install-it"><a href="#4-download-source-code-of-ffmpeg-and-install-it" class="headerlink" title="4.download source code of ffmpeg, and install it"></a>4.download source code of ffmpeg, and install it</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https://ffmpeg.org/releases/ffmpeg-4.2.3.tar.bz2</span><br><span class="line"></span><br><span class="line">tar -jxvf ffmpeg-4.2.3.tar.bz2</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ffmpeg-4.2.3</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/ffmpeg --enable-shared --disable-w32threads --enable-pthreads  --enable-gpl --enable-libx264 --enable-libx265 --enable-nonfree</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure><h2 id="5-view-install-log-configure-x265"><a href="#5-view-install-log-configure-x265" class="headerlink" title="5.view install log \configure x265"></a>5.view install log \configure x265</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PKG_CONFIG_PATH=/usr/local/x265/lib/pkgconfig</span><br><span class="line"></span><br><span class="line">or add it <span class="keyword">in</span> /etc/profile:</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PKG_CONFIG_PATH=/usr/local/x264/lib/pkgconfig/</span><br><span class="line"><span class="built_in">export</span> PKG_CONFIG_PATH=/usr/local/x265/lib/pkgconfig:<span class="variable">$PKG_CONFIG_PATH</span></span><br></pre></td></tr></table></figure><h2 id="6-edit-etc-ld-so-config"><a href="#6-edit-etc-ld-so-config" class="headerlink" title="6.edit &#x2F;etc&#x2F;ld.so.config"></a>6.edit &#x2F;etc&#x2F;ld.so.config</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">include ld.so.conf.d/*.conf</span><br><span class="line"></span><br><span class="line">#add the following content</span><br><span class="line">/usr/local/ffmpeg/lib/  #ffmpeg installation path</span><br><span class="line">/usr/local/lib  #other installation path，if you didn&#x27;t select path, when installing x264. this is default path.</span><br><span class="line">/usr/local/x265/lib/ #Installation path for x265</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1-preparation-install-dependencies&quot;&gt;&lt;a href=&quot;#1-preparation-install-dependencies&quot; class=&quot;headerlink&quot; title=&quot;1.preparation install de</summary>
+      
+    
+    
+    
+    <category term="Development" scheme="https://086whl.github.io/086whl/categories/Development/"/>
+    
+    
+    <category term="Ffmpeg" scheme="https://086whl.github.io/086whl/tags/Ffmpeg/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Centos7 update cmake</title>
+    <link href="https://086whl.github.io/086whl/2024/08/01/Centos7-update-cmake/"/>
+    <id>https://086whl.github.io/086whl/2024/08/01/Centos7-update-cmake/</id>
+    <published>2024-08-01T01:26:26.000Z</published>
+    <updated>2024-08-01T08:55:03.152Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-check-installed-cmake-version"><a href="#1-check-installed-cmake-version" class="headerlink" title="1.check installed  cmake version"></a>1.check installed  cmake version</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -version</span><br></pre></td></tr></table></figure><h2 id="2-create-a-new-dir-and-enter-it"><a href="#2-create-a-new-dir-and-enter-it" class="headerlink" title="2.create a new dir and enter it"></a>2.create a new dir and enter it</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /opt/cmake</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /opt/cmake/</span><br></pre></td></tr></table></figure><h2 id="3-get-install-package"><a href="#3-get-install-package" class="headerlink" title="3.get install package"></a>3.get install package</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://cmake.org/files/v3.26/cmake-3.26.4.tar.gz</span><br></pre></td></tr></table></figure><h2 id="4-decompression"><a href="#4-decompression" class="headerlink" title="4.decompression"></a>4.decompression</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf cmake-3.26.4.tar.gz</span><br></pre></td></tr></table></figure><h2 id="5-enter-cmake-3-26-4-folder"><a href="#5-enter-cmake-3-26-4-folder" class="headerlink" title="5.enter cmake-3.26.4 folder"></a>5.enter cmake-3.26.4 folder</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> cmake-3.26.4</span><br></pre></td></tr></table></figure><h2 id="6-configure-install-path"><a href="#6-configure-install-path" class="headerlink" title="6.configure install path"></a>6.configure install path</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/cmake</span><br></pre></td></tr></table></figure><h2 id="7-install-cmake"><a href="#7-install-cmake" class="headerlink" title="7.install cmake"></a>7.install cmake</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure><h2 id="8-create-symbolic-link-to-usr-bin"><a href="#8-create-symbolic-link-to-usr-bin" class="headerlink" title="8.create symbolic link to &#x2F;usr&#x2F;bin"></a>8.create symbolic link to &#x2F;usr&#x2F;bin</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s /usr/local/cmake/bin/cmake /usr/bin/cmake</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;1-check-installed-cmake-version&quot;&gt;&lt;a href=&quot;#1-check-installed-cmake-version&quot; class=&quot;headerlink&quot; title=&quot;1.check installed  cmake versi</summary>
+      
+    
+    
+    
+    <category term="Development" scheme="https://086whl.github.io/086whl/categories/Development/"/>
+    
+    
+    <category term="Ffmpeg" scheme="https://086whl.github.io/086whl/tags/Ffmpeg/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Video push with ZLMediaKit and WVP PRO</title>
+    <link href="https://086whl.github.io/086whl/2024/07/31/Video-push-with-ZLMediaKit-and-WVP-PRO/"/>
+    <id>https://086whl.github.io/086whl/2024/07/31/Video-push-with-ZLMediaKit-and-WVP-PRO/</id>
+    <published>2024-07-31T08:16:19.000Z</published>
+    <updated>2024-08-01T08:55:08.127Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="1-install-ZLMediaKit"><a href="#1-install-ZLMediaKit" class="headerlink" title="1.install ZLMediaKit"></a>1.install ZLMediaKit</h1><h2 id="1-1update-YUM"><a href="#1-1update-YUM" class="headerlink" title="1.1update YUM"></a>1.1update YUM</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></table></figure><h2 id="1-2install-GIT"><a href="#1-2install-GIT" class="headerlink" title="1.2install GIT"></a>1.2install GIT</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git</span><br></pre></td></tr></table></figure><h2 id="1-3download-source-code-of-ZLMediaKit"><a href="#1-3download-source-code-of-ZLMediaKit" class="headerlink" title="1.3download source code of ZLMediaKit"></a>1.3download source code of ZLMediaKit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth 1 https://gitee.com/xia-chu/ZLMediaKit</span><br><span class="line"><span class="built_in">cd</span> ZLMediaKit</span><br><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure><h2 id="1-4install-dependencies"><a href="#1-4install-dependencies" class="headerlink" title="1.4install dependencies"></a>1.4install dependencies</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install gcc</span><br><span class="line">sudo yum -y install gcc-c++</span><br></pre></td></tr></table></figure><h2 id="1-5-isntall-cmake"><a href="#1-5-isntall-cmake" class="headerlink" title="1.5 isntall cmake"></a>1.5 isntall cmake</h2><p>ZLMediaKit use cmake to Build，Makefile(or Xcode&#x2F;VS project)can only be generated through cmake，so it is necessary to install cmake first to complete the subsequent steps.</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install cmake</span><br><span class="line">sudo yum install libssl-dev</span><br><span class="line">sudo yum install libsdl-dev</span><br><span class="line">sudo yum install libavcodec-dev</span><br><span class="line">sudo yum install libavutil-dev</span><br><span class="line">sudo yum install ffmpeg</span><br></pre></td></tr></table></figure><h2 id="1-6Build-and-compile-projects"><a href="#1-6Build-and-compile-projects" class="headerlink" title="1.6Build and compile projects"></a>1.6Build and compile projects</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ZLMediaKit</span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/1.0.2j/</span><br><span class="line">cmake ..</span><br><span class="line">make -j4</span><br></pre></td></tr></table></figure><h1 id="2-install-WVP-PRO"><a href="#2-install-WVP-PRO" class="headerlink" title="2.install WVP-PRO"></a>2.install WVP-PRO</h1><p>…</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;1-install-ZLMediaKit&quot;&gt;&lt;a href=&quot;#1-install-ZLMediaKit&quot; class=&quot;headerlink&quot; title=&quot;1.install ZLMediaKit&quot;&gt;&lt;/a&gt;1.install ZLMediaKit&lt;/h1&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="Development" scheme="https://086whl.github.io/086whl/categories/Development/"/>
+    
+    
+    <category term="Ffmpeg" scheme="https://086whl.github.io/086whl/tags/Ffmpeg/"/>
+    
+  </entry>
   
   <entry>
     <title>Windows sever 2008R2 deployment Mysql5.7.44 and Nginx</title>

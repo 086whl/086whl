@@ -6,17 +6,19 @@
   <meta http-equiv="cache-control" content="no-cache">
   <meta http-equiv="expires" content="0">
   
-  <title>saveBatch优化 | Jesse-W</title>
+  <title>Video push with ZLMediaKit and WVP PRO | Jesse-W</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="数据量过大，使用saveBatch保存数据太慢如何解决：在使用mybatis-plus的saveBatch方法时发现保存太慢，会生成一大堆的insert，而不是一批一批的，影响因素可能有两个，如下：
+  <meta name="description" content="1.install ZLMediaKit1.1update YUM1sudo yum update
 
-mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可能为null">
+1.2install GIT1sudo yum install git
+
+1.3download source code of ZLMediaKit123git clone --depth 1 ht">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="saveBatch优化"/>
+  <meta property="og:title" content="Video push with ZLMediaKit and WVP PRO"/>
   <meta property="og:site_name" content="Jesse-W"/>
 
   
@@ -111,7 +113,7 @@ mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可�
 
 	
 		<div class="page-header">
-			<h1> saveBatch优化</h1>
+			<h1> Video push with ZLMediaKit and WVP PRO</h1>
 		</div>
 	
 
@@ -128,19 +130,20 @@ mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可�
 	<div class="mypage">		
 	  		
 
-	  <p>数据量过大，使用saveBatch保存数据太慢如何解决：<br>在使用mybatis-plus的saveBatch方法时发现保存太慢，会生成一大堆的insert，而不是一批一批的，影响因素可能有两个，如下：</p>
-<ol>
-<li>mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可能为null的话，在可以在注解上增加忽略</li>
-</ol>
-<p>@TableField(value &#x3D; “manager_name”,insertStrategy &#x3D; FieldStrategy.IGNORED)<br>    private String	managerName;<br>这样能保证saveBatch的时候只会有一个insert（当然这也取决于你用的批次大小，默认为1000一次insert）</p>
-<p>如果没有特别要求，可以设置全局配置来保障，实际中使用批量保存的其实就特定表，也不是特别建议使用全局的配置，把可能的字段添加忽略就行了。</p>
-<p>mybatis-plus:<br>  global-config:<br>    db-config:<br>      insert-strategy: ignored<br>修改完毕后，insert应该是一批一个insert，而不是一堆</p>
-<p>Mybatis-Plus saveBatch() 批量保存失效</p>
-<ol start="2">
-<li>如果已经是一批一个insert以后，还是慢，则需要修改数据库链接，需要在数据库链接后面增加</li>
-</ol>
-<p>rewriteBatchedStatements&#x3D;true<br>这样在调用saveBatch的时候时间能得到有效提升</p>
-<p>解释：rewriteBatchedStatements&#x3D;true<br>MySQL的JDBC连接的url中要加rewriteBatchedStatements参数，并保证5.1.13以上版本的驱动，才能实现高性能的批量插入。<br>MySQL JDBC驱动在默认情况下会无视executeBatch()语句，把我们期望批量执行的一组sql语句拆散，一条一条地发给MySQL数据库，批量插入实际上是单条插入，直接造成较低的性能。<br>只有把rewriteBatchedStatements参数置为true, 驱动才会帮你批量执行SQL<br>另外这个选项对INSERT&#x2F;UPDATE&#x2F;DELETE都有效</p>
+	  <h1 id="1-install-ZLMediaKit"><a href="#1-install-ZLMediaKit" class="headerlink" title="1.install ZLMediaKit"></a>1.install ZLMediaKit</h1><h2 id="1-1update-YUM"><a href="#1-1update-YUM" class="headerlink" title="1.1update YUM"></a>1.1update YUM</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2install-GIT"><a href="#1-2install-GIT" class="headerlink" title="1.2install GIT"></a>1.2install GIT</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3download-source-code-of-ZLMediaKit"><a href="#1-3download-source-code-of-ZLMediaKit" class="headerlink" title="1.3download source code of ZLMediaKit"></a>1.3download source code of ZLMediaKit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth 1 https://gitee.com/xia-chu/ZLMediaKit</span><br><span class="line"><span class="built_in">cd</span> ZLMediaKit</span><br><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4install-dependencies"><a href="#1-4install-dependencies" class="headerlink" title="1.4install dependencies"></a>1.4install dependencies</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install gcc</span><br><span class="line">sudo yum -y install gcc-c++</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-isntall-cmake"><a href="#1-5-isntall-cmake" class="headerlink" title="1.5 isntall cmake"></a>1.5 isntall cmake</h2><p>ZLMediaKit use cmake to Build，Makefile(or Xcode&#x2F;VS project)can only be generated through cmake，so it is necessary to install cmake first to complete the subsequent steps.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install cmake</span><br><span class="line">sudo yum install libssl-dev</span><br><span class="line">sudo yum install libsdl-dev</span><br><span class="line">sudo yum install libavcodec-dev</span><br><span class="line">sudo yum install libavutil-dev</span><br><span class="line">sudo yum install ffmpeg</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6Build-and-compile-projects"><a href="#1-6Build-and-compile-projects" class="headerlink" title="1.6Build and compile projects"></a>1.6Build and compile projects</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ZLMediaKit</span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/1.0.2j/</span><br><span class="line">cmake ..</span><br><span class="line">make -j4</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-install-WVP-PRO"><a href="#2-install-WVP-PRO" class="headerlink" title="2.install WVP-PRO"></a>2.install WVP-PRO</h1><p>…</p>
 	  
 	</div>
 
@@ -150,13 +153,13 @@ mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可�
 
     
     
-    <a href="/086whl/2023/12/11/Windows-sever-2008R2-deployment-Mysql5-7-44-and-Nginx/" type="button" class="btn btn-default"><i
+    <a href="/086whl/2024/08/01/Centos7-update-cmake/" type="button" class="btn btn-default"><i
                 class="fa fa-arrow-circle-o-left"></i> Prev</a>
     
 
     <a href="/086whl/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
     
-    <a href="/086whl/2023/10/23/first-article/" type="button" class="btn btn-default ">Next<i
+    <a href="/086whl/2023/12/11/Windows-sever-2008R2-deployment-Mysql5-7-44-and-Nginx/" type="button" class="btn btn-default ">Next<i
                 class="fa fa-arrow-circle-o-right"></i></a>
     
 
@@ -185,7 +188,7 @@ mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可�
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2023-12-08 
+	2024-07-31 
 	</div>
 	
 
@@ -209,7 +212,7 @@ mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可�
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/086whl/tags/MybatisPlus/">MybatisPlus<span>1</span></a></li>
+  <li><a href="/086whl/tags/Ffmpeg/">Ffmpeg<span>3</span></a></li>
     </ul>
 	</div>
 		
@@ -245,7 +248,7 @@ mybatis-plus使用saveBatch的时候，需要保证字段不为null，如果可�
     admin: "086whl", // github 用户名
     perPage: 20,
     id: location.pathname.slice(0, 50), // 查找 issus 的条件，后面将对 id 有针对逻辑
-    title: "saveBatch优化",
+    title: "Video push with ZLMediaKit and WVP PRO",
     distractionFreeMode: true,
     body: "🚀 " + location.href + "\n\n欢迎通过 issues 留言 ，互相交流学习😊", // 初始化后，issues 的内容
   });
